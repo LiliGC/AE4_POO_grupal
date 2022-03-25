@@ -1,6 +1,6 @@
 class Vendedor:
     
-    def __init__(self, run, nombre, apellido, seccion, comision=0, empleado_de_mes=0, ventas = 0): # empleado del mes es el argumento opcional del abp2
+    def __init__(self, run, nombre, apellido, seccion, comision=0, empleado_de_mes=0, ventas = 0): 
         self.run = run
         self.nombre = nombre
         self.apellido = apellido

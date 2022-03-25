@@ -17,8 +17,15 @@ def limpiar():
 
 
 a={"1":1000,"2":1000,"3":1000, "4":1000, "5":1000}
+b={
+    "1":2,
+    "2":2,
+    "3":1, 
+    "4":2, 
+    "5":2
+    }
 bodega=BodegaPrincipal("Arlegui 400 Viña del Mar", 5000, a)
-sucursal=Sucursal("1 Norte 1400 Viña del Mar", 1000,{"1":2,"2":2,"3":1, "4":2, "5":2} )
+sucursal=Sucursal("1 Norte 1400 Viña del Mar", 1000, b)
 
 prov1= Proveedor("72635988-7", "Danilo Mardones", "Adidas_SA", "Chile", "Juridica")
 prov2= Proveedor("66359188-7", "Ricardo Gonzalez", "Foster_SA", "Chile", "Juridica")
@@ -52,7 +59,6 @@ vend5= Vendedor(186591239, "Dior", "Brando", "Librería")
 
 vendedores={"1":vend1,"2":vend2, "3":vend3, "4":vend4, "5":vend5}
 
-#vend1.vender(zapatillas, liliana)
 ##################################################################################
 while True:
     limpiar()
@@ -86,7 +92,7 @@ while True:
                 limpiar()
                 print("Nuestros proveedores:\n")
                 print("{:15}{:25}{:25}{:15}{:15}".format("RUN", "Nombre", "Razón Social", "País", "Personalidad"))
-                print("="*90)
+                print("="*93)
                 for key in proveedores:
                     print(proveedores[key])
                 input("\n")
