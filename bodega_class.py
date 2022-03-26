@@ -11,6 +11,10 @@ class BodegaPrincipal:
             self.stock[producto_elegido]=self.stock[producto_elegido]-cantidad
             sucursal.stock[producto_elegido]=sucursal.stock[producto_elegido]+cantidad
             print(f"El nuevo stock es de {self.stock[producto_elegido]} unidad(es).")
+            if sucursal.stock[producto_elegido]>500:
+                dif=sucursal.stock[producto_elegido]-500
+                sucursal.stock[producto_elegido]=500
+                self.stock[producto_elegido]+=dif
         else: 
             print("Despacho rechazado, no hay suficiente stock")
 
@@ -30,3 +34,5 @@ b={"1":100,"2":100,"3":100, "4":100, "5":100}
 a=Bodega_principal("Arlegui 400 Viña del Mar", 500, b)
 
 """
+
+

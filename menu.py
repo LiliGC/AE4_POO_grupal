@@ -59,6 +59,9 @@ vend5= Vendedor(186591239, "Dior", "Brando", "Librería")
 
 vendedores={"1":vend1,"2":vend2, "3":vend3, "4":vend4, "5":vend5}
 
+
+
+
 ##################################################################################
 while True:
     limpiar()

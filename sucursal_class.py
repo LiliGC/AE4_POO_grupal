@@ -20,6 +20,11 @@ class Sucursal(BodegaPrincipal):
         else: 
             print("Despacho rechazado, no hay suficiente stock")
 
+    def recepcionar_producto(self, producto_elegido, cantidad):
+        super().recepcionar_producto(producto_elegido, cantidad)
+        if self.stock[producto_elegido]>500:
+            self.stock[producto_elegido]=500
+
 """
 sucursal=Sucursal("1 Norte 1400 Viña del Mar", 200,{"1":2,"2":20,"3":30, "4":2, "5":1} )
 """

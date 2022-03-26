@@ -19,8 +19,8 @@ class Vendedor:
         self.ventas += 1
 
     def vender(self, prod, cli):      
-        var2 = int(prod.valor_neto+(prod.valor_neto*1.19/100))
-        var = int(prod.valor_neto*0.5/100)
+        var2 = int(prod.valor_neto+(prod.valor_neto*1.19/100))  #   valor a pagar x el cliente
+        var = int(prod.valor_neto*0.5/100)  #comisión que se lleva el vendedor
         if prod.stock >= 1 and cli._Cliente__saldo >= var2:
             print(f"Compra Autorizada\nUsted venderá 1 unidad de {prod.stock} del producto {prod.nombre}")
             prod.stock -= 1
