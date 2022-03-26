@@ -1,3 +1,4 @@
+from limpiarconsola import *
 from bodega_class import BodegaPrincipal
 from sucursal_class import Sucursal
 from proveedor_class import Proveedor
@@ -5,20 +6,17 @@ from producto_class import Producto
 from cliente_class import Cliente
 from vendedor_class import Vendedor
 
-import platform
-import os
-
-def limpiar():
-    sistema = platform.system()
-    if sistema == "Windows":
-        os.system("cls")
-    else:
-        os.system("clear")
-
-
+######### INSTANCIAMIENTO DE OBJETOS ################
 a={"1":1000,"2":1000,"3":1000, "4":1000, "5":1000}
+b={
+    "1":2,
+    "2":2,
+    "3":1, 
+    "4":2, 
+    "5":2
+    }
 bodega=BodegaPrincipal("Arlegui 400 Viña del Mar", 5000, a)
-sucursal=Sucursal("1 Norte 1400 Viña del Mar", 1000,{"1":2,"2":2,"3":1, "4":2, "5":2} )
+sucursal=Sucursal("1 Norte 1400 Viña del Mar", 1000, b)
 
 prov1= Proveedor("72635988-7", "Danilo Mardones", "Adidas_SA", "Chile", "Juridica")
 prov2= Proveedor("66359188-7", "Ricardo Gonzalez", "Foster_SA", "Chile", "Juridica")
@@ -34,7 +32,7 @@ audifonos= Producto(20223, "audifonos", "electrónica", proveedores["3"].razon_s
 chocolates= Producto(20224, "bombones de chocolate", "confitería", proveedores["4"].razon_social, sucursal.stock["4"], 15000,"oscuro")
 vino= Producto(20225, "botella de vino 1.5L","licores", proveedores["5"].razon_social, sucursal.stock["5"], 20000, "tinto")
 #Creación de un diccionario con los productos
-productos= {"1":zapatillas, "2":jeans, "3":audifonos, "4":chocolates, "5":vino}
+productos= {"1": zapatillas, "2": jeans, "3": audifonos, "4": chocolates, "5": vino}
 
 liliana= Cliente(1,"Liliana","Garmendia","liligc@gmail.com","10/02/2021", 80000)
 clara=Cliente(2,"Clara", "Campos", "clara@gmail.com", "10/01/2019", 60000)
@@ -52,8 +50,12 @@ vend5= Vendedor(186591239, "Dior", "Brando", "Librería")
 
 vendedores={"1":vend1,"2":vend2, "3":vend3, "4":vend4, "5":vend5}
 
-#vend1.vender(zapatillas, liliana)
-##################################################################################
+#k = input("key: ")
+#bodega.despachar_producto(k, 50, sucursal)
+
+#'''
+
+###############################################################################
 while True:
     limpiar()
     print("<<<<<< Menú Principal >>>>>>\n")
@@ -77,20 +79,120 @@ while True:
         
             op1 = int(input("\nSeleccione opción: "))
         
+            # 1.1 Bodega principal
             if op1 == 1:
-                pass
-            elif op1 == 2:
-                pass
+                limpiar()
+                print("<<<<<< Bodega Principal >>>>>>\n")
+                print("[1] Ver Bodega Principal.")
+                print("[2] Despachar productos a Sucursal.")
+                print("[3] Abastecer productos.")
+                print("[4] Volver al Menú de Bodegas.")
+        
+                op11 = int(input("\nSeleccione opción: "))
+                
+                # 1.1.1 Estado Bodega Principal
+                if op11 == 1:
+                    limpiar()
+                    listprod = [0]*len(productos)
+                    for i in range(len(productos)):
+                        listprod[i] = productos[str(i+1)].nombre.capitalize()
+                    print("       >>> Bodega Principal <<<")
+                    print("{:<5}{:25}{:6}".format("ID", "Producto", "Stock"))
+                    print("="*40)
+                    bodega.mostrar_stock(listprod)
+                    input()
+                
+                # 1.1.2 Despachar a sucursal
+                if op11 == 2:
+                    limpiar()
+                    print("Productos a despachar:\n")
+                    for key in productos:
+                        print(f"[{key}]\t{productos[key].nombre.capitalize()}")
+                    p = input("\nSeleccione producto: ")
+                    n = int(input(f"\nIngrese número de unidades de {productos[p].nombre.capitalize()} (Stock: {productos[p].stock}) a despachar: "))
+                
+                    bodega.despachar_producto(p, n, sucursal)
+                    productos[p].stock = sucursal.stock[p]
+                    input()
+
+                # 1.1.3 Abastecer bodega
+                if op11 == 3:
+                    limpiar()
+                    print("Productos a abastecer:\n")
+                    for key in productos:
+                        print(f"[{key}]\t{productos[key].nombre.capitalize()}")
+                    p = input("\nSeleccione producto: ")
+                    n = int(input(f"\nIngrese número de unidades de {productos[p].nombre.capitalize()} a abastecer: "))
+                
+                    bodega.recepcionar_producto(p, n)
+                    input()
+        
+                if op11 == 4:
+                    break
             
+            # 1.2 Sucursal   
+            elif op1 == 2:
+                limpiar()
+                print("<<<<<< Sucursal >>>>>>\n")
+                print("[1] Ver Sucursal.")
+                print("[2] Despachar productos a Bodega Principal.")
+                print("[3] Reponer stock.")
+                print("[4] Volver al Menú de Bodegas.")
+            
+                op12 = int(input("\nSeleccione opción: "))
+                
+                # 1.2.1 Ver Sucursal == Ver stock productos
+                if op12 == 1:
+                    limpiar()
+                    listprod = [0]*len(productos)
+                    for i in range(len(productos)):
+                        listprod[i] = productos[str(i+1)].nombre.capitalize()
+                    print("       >>> Sucursal <<<")
+                    print("{:<5}{:25}{:6}".format("ID", "Producto", "Stock"))
+                    print("="*40)
+                    sucursal.mostrar_stock(listprod)
+                    input()
+                
+                # 1.2.2 Despachar a Bodega   
+                if op12 == 2:
+                    limpiar()
+                    print("Productos a despachar:\n")
+                    for key in productos:
+                        print(f"[{key}]\t{productos[key].nombre.capitalize()}")
+                    p = input("\nSeleccione producto: ")
+                    n = int(input(f"\nIngrese número de unidades de {productos[p].nombre.capitalize()} a despachar: "))
+                
+                    sucursal.despachar_producto(p, n, bodega)
+                    productos[p].stock = sucursal.stock[p]
+                    input()
+                
+                # 1.2.3 Reponer stock
+                if op12 == 3:
+                    limpiar()
+                    print("Productos para añadir stock de unidades:\n")
+                    for key in productos:
+                        print(f"[{key}]\t{productos[key].nombre.capitalize()}")
+                    p = input("\nSeleccione producto: ")
+                    n = int(input(f"\nIngrese número de unidades de {productos[p].nombre.capitalize()} a abastecer: "))
+                
+                    sucursal.recepcionar_producto(p, n, bodega)
+                    productos[p].stock = sucursal.stock[p]
+                    input()
+                
+                if op12 == 4:
+                    break
+
+            # 1.3 Ver proveedores
             elif op1 == 3:
                 limpiar()
                 print("Nuestros proveedores:\n")
                 print("{:15}{:25}{:25}{:15}{:15}".format("RUN", "Nombre", "Razón Social", "País", "Personalidad"))
-                print("="*90)
+                print("="*93)
                 for key in proveedores:
                     print(proveedores[key])
                 input("\n")
-                
+            
+            # 1.4 Ver info de productos    
             elif op1 == 4:
                 limpiar()
                 print("Nuestros productos:\n")
@@ -175,3 +277,4 @@ while True:
         break
 limpiar()
 print("Que tenga una buena jornada!.\n")
+#'''

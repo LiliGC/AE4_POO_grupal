@@ -6,27 +6,32 @@ class BodegaPrincipal:
         self.stock=stock
 
     def despachar_producto(self, producto_elegido, cantidad, sucursal):
-        if self.stock[producto_elegido]>=cantidad:
+        
+        if self.stock[producto_elegido] >= cantidad:
             print("Producto despachado a sucursal")
-            self.stock[producto_elegido]=self.stock[producto_elegido]-cantidad
-            sucursal.stock[producto_elegido]=sucursal.stock[producto_elegido]+cantidad
-            print(f"El nuevo stock es de {self.stock[producto_elegido]} unidad(es).")
+            self.stock[producto_elegido] = self.stock[producto_elegido]-cantidad
+            sucursal.stock[producto_elegido] = sucursal.stock[producto_elegido]+cantidad
+            print(f"El nuevo stock del producto en Bodega Principal es de {self.stock[producto_elegido]} unidad(es).")
+            print(f"El nuevo stock del producto en Sucursal es de {sucursal.stock[producto_elegido]} unidad(es).")
+            
+            if sucursal.stock[producto_elegido] > 500:
+                print("Alerta!! El stock de unidades del producto es mayor que 500.")
+                dif = sucursal.stock[producto_elegido] - 500
+                print(f"Se devolverán {dif} unidades desde Sucursal.")
+                sucursal.stock[producto_elegido] = 500
+                self.stock[producto_elegido] += dif
+        
         else: 
-            print("Despacho rechazado, no hay suficiente stock")
+            print("Despacho rechazado, no hay suficiente stock en Bodega Principal")
 
     def recepcionar_producto(self, producto_elegido, cantidad):
             self.stock[producto_elegido]=self.stock[producto_elegido]+cantidad
             print("Producto recepcionado")
 
     def __str__(self):
-        return f"Datos Bodega principal:\n"'Dirección: {:<15} \nmts2: {:<15}'.format(self.direccion, self.mt2)
+        return f"Datos Bodega principal:\n"'Dirección: {:<15} \nmts^2: {:<15}'.format(self.direccion, self.mt2)
 
-    def mostrar_stock(self):
-        for key in self.stock:
-            print(key, self.stock[key])
-
-"""
-b={"1":100,"2":100,"3":100, "4":100, "5":100}
-a=Bodega_principal("Arlegui 400 Viña del Mar", 500, b)
-
-"""
+    # lo modifique
+    def mostrar_stock(self, nombres_productos):
+        for i in range(len(self.stock)):
+            print("{:<5}{:25}{:6}".format( i+1, nombres_productos[i], self.stock[str(i+1)]))
